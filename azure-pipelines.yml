@@ -1,0 +1,28 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger: 
+    - main
+pool:
+  name: Komit
+name: Komit packages pipeline
+
+steps:
+- task: NuGetAuthenticate@1
+  displayName: 'NuGet Authenticate'
+- task: DotNetCoreCLI@2
+  displayName: Dotnet build
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '-c Release'
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: 'push'
+    packagesToPush: '$(System.DefaultWorkingDirectory)/**/*.nupkg;!$(System.DefaultWorkingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '953d74bb-2421-4219-af65-f977318611f1'
+    allowPackageConflicts: true
