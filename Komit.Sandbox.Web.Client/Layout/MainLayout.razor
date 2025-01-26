@@ -1,0 +1,14 @@
+﻿@using Komit.Base.Ui.Components.Components.PageLayout
+@using MudBlazor
+@inherits LayoutComponentBase
+
+<BaseMainLayout Body="@Body" NavBarRender="NavBar"></BaseMainLayout>
+
+@code 
+{    
+    RenderFragment NavBar => builder =>
+    {
+        builder.OpenComponent(0, typeof(NavBar));
+        builder.CloseComponent();
+    };
+}

@@ -1,0 +1,47 @@
+﻿@page "/Cycle-list"
+<h3>Cycle List</h3>
+<button class="btn btn-primary" @onclick="AddCycle">Add Cycle</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Brand</th>
+            <th>Farve</th>
+            <th>Størrelse</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cycle in CycleList)
+        {
+            <tr>
+                <td>@cycle.Id</td>
+                <td>@cycle.Brand</td>
+                <td>@cycle.Color</td>
+                <td>@cycle.Size</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Inject] CqrsClient Client { get; set; }
+    IEnumerable<CycleInfo> CycleList = new List<CycleInfo>();
+
+    private async Task AddCycle()
+    {
+        var data = await Client.Command(new AddCycleCommand(Brand: "Scott", color: "Black", Size: 54)).Success();
+        await ShowCycleList();
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Client = Client.ForModule("sandbox");
+        await ShowCycleList();
+    }
+
+    private async Task ShowCycleList()
+    {
+        CycleList = await Client.Query(new ShowCycleListQuery()).Result();
+    }
+}

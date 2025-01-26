@@ -1,0 +1,62 @@
+﻿@page "/boxes"
+@using Komit.BoxOfSand.Values.Commands
+@using Komit.BoxOfSand.Values.Queries
+@using Microsoft.Extensions.Options
+@inject CqrsClient Api;
+<PageTitle>Boxes</PageTitle>
+<div>
+    <h1 class="is-size-1">Boxes</h1>
+
+    <button class="button is-info" @onclick="CreateBoxCommand">CreateBoxCommand</button>
+    <button class="button is-info" @onclick="UndoLastArchivationBoxCommand">UndoLastArchivationBoxCommand</button>
+
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                <th>Name</th>
+                <th>Actions</th>
+                    <th>First content</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var box in boxList)
+                {
+                    <tr>
+                        <td>@box.Id</td>
+                    <td>@box.Name</td>
+                    <td><button class="button is-info" @onclick="async x => await ArchiveBoxCommand(box.Id)">ArchiveBoxCommand</button></td>
+                        <td>@box.Content.FirstOrDefault()?.Name</td>
+                    </tr>
+                }
+            </tbody>
+    </table>
+</div>
+@code {
+    private BoxInfoDto[] boxList = Array.Empty<BoxInfoDto>();
+
+    private async Task CreateBoxCommand()
+    {
+        await Api.Command(new CreateBoxCommand(Guid.NewGuid().ToString() + "Command")).Success();
+        await LoadBoxes();
+        //StateHasChanged(); // If Needed (Solves rendering gotchas)
+    }
+    async Task UndoLastArchivationBoxCommand()
+    {
+        await Api.Command(new UndoLastBoxArchivationCommand()).Success();
+        await LoadBoxes();
+    }
+    async Task ArchiveBoxCommand(Guid id)
+    {
+        await Api.Command(new ArchiveBoxCommand(id)).Success();
+        await LoadBoxes();
+    }
+    private async Task LoadBoxes()
+        => boxList = await Api.Query(new ShowBoxesQuery()).Result();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Api = Api.ForClient(Options.DefaultName).ForModule("boxofsand");
+        await LoadBoxes();
+    }
+}

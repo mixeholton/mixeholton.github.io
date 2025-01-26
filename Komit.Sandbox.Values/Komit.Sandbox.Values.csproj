@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="IntegrationEvents\" />
+	  <Folder Include="Values\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Komit.Base.Values" Version="6.0.0-2" />
+	</ItemGroup>
+	<ItemGroup>
+		<!--<ProjectReference Include="..\Komit.Base.Values\Komit.Base.Values.csproj" />-->
+	</ItemGroup>
+</Project>

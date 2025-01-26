@@ -1,0 +1,54 @@
+﻿@page "/users"
+@using Microsoft.Extensions.Options;
+@inject CqrsClient Api;
+<PageTitle>Users</PageTitle>
+
+<h1>Users</h1>
+
+<button class="btn btn-primary" @onclick="CreateUserCommand">CreateUserCommand</button>
+<button class="btn btn-primary" @onclick="CreateUserAndListAllRequest">CreateUserAndListAllRequest</button>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in userList)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Name</td>
+                    <td>@user.CreatedDateTime</td>
+                    <td>@user.CreatedDate</td>
+                    <td>@user.CreatedTime</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+@code {
+    private UserInfoDto[] userList = Array.Empty<UserInfoDto>();
+
+    private async Task CreateUserCommand()
+    {
+        await Api.Command(new CreateUserCommand(Guid.NewGuid().ToString() + "Command")).Success();
+        await LoadUsers();
+        //StateHasChanged(); // If Needed (Solves rendering gotchas)
+    }
+    private async Task CreateUserAndListAllRequest()
+    {
+        userList = await Api.Request<UserInfoDto[]>(new CreateUserAndListAll(Guid.NewGuid().ToString() + "Request")).Result();
+        //StateHasChanged(); // If Needed (S olves rendering gotchas)
+    }
+    private async Task LoadUsers()
+        => userList = await Api.Query<UserInfoDto[]>(new ShowUsersQuery()).Result() ?? Array.Empty<UserInfoDto>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Api = Api.ForClient(Options.DefaultName).ForModule("sandbox");
+        await LoadUsers();
+    }
+}

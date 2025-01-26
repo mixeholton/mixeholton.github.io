@@ -1,0 +1,27 @@
+﻿@using System.Reflection
+@using Komit.Base.Dev.Client
+@using Komit.BoxOfSand.Ui.Components
+<Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies=@ComponentAssemblies OnNavigateAsync="OnNavigateAsync">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <PageTitle>Not found</PageTitle>
+        <LayoutView Layout="@typeof(Layout.MainLayout)">
+            <p role="alert">Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+@code {
+    [Inject] SessionHandler SessionHandler { get; set; }
+    List<Assembly> ComponentAssemblies = new()
+    {
+        // typeof(Accounting.Ui.Components.AccountingAppComponent).Assembly,
+        typeof(DevAccess).Assembly,
+        typeof(Boxes).Assembly
+    };
+    private async Task OnNavigateAsync(NavigationContext context){
+        await SessionHandler.Initialize();
+    }
+}

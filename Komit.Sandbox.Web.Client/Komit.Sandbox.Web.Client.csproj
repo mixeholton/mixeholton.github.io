@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+    <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="Komit.Base.Dev.Client" Version="6.0.0-3" />-->
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Komit.Base.Dev.Client\Komit.Base.Dev.Client.csproj" />
+		<ProjectReference Include="..\Komit.BoxOfSand.Ui.Components\Komit.BoxOfSand.Ui.Components.csproj" />
+		<ProjectReference Include="..\Komit.BoxOfSand.Values\Komit.BoxOfSand.Values.csproj" />
+		<ProjectReference Include="..\Komit.Sandbox.Values\Komit.Sandbox.Values.csproj" />
+	</ItemGroup>
+
+</Project>

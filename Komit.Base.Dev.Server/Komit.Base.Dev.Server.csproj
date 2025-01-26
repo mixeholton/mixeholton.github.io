@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <Version>6.0.0-3</Version>
+	  <Authors>Komit dev team</Authors>
+	  <Company>Komit a.m.b.a.</Company>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Komit.Infrastructure.CqrsClient" Version="6.0.0-2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Komit.SimpleAuth.TokenProvider\Komit.SimpleApiAuth.TokenProvider.csproj" />
+	  <ProjectReference Include="..\Komit.SimpleAuth.TokenValidator\Komit.SimpleApiAuth.TokenValidator.csproj" />
+		<ProjectReference Include="..\Komit.Base.Module\Komit.Base.Module.csproj" />
+	</ItemGroup>
+</Project>

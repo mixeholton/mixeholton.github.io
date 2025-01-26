@@ -1,0 +1,40 @@
+﻿@page "/wine-list"
+<h3>Wine List</h3>
+<button class="btn btn-primary" @onclick="AddWine">Add wine</button>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vine in WineList)
+        {
+            <tr>
+                <td>@vine.Id</td>
+                <td>@vine.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@code {
+    [Inject] CqrsClient Client { get; set; }
+    IEnumerable<WineInfo> WineList = new List<WineInfo>();
+
+    async Task AddWine()
+    {
+        await Client.Command(new AddWineCommand("Wine from " + DateTime.Now.ToString())).Success();
+        await ShowWineList();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Client = Client.ForModule("sandbox");
+        await ShowWineList();
+    }
+
+    async Task ShowWineList()
+    {
+        WineList = await Client.Query(new ShowWineListQuery()).Result();
+    }
+}

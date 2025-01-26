@@ -1,0 +1,36 @@
+﻿@using Komit.Base.Ui.Components.Services;
+<style>
+    .level-item.button {
+    margin-right: 0 !important;
+    }
+</style>
+<PageTitle>@(Access.Page?.Title)</PageTitle>
+@if(HideActions != true)
+{
+    <div class="level my-1">
+        <div class="level-left ml-3">
+            <div class="level-item">@Access.Page?.Title</div>
+        </div>
+        <div class="level-right mr-3">
+            <button class="button is-white level-item"><I X="keyboard"></I></button>
+            @ChildContent
+            <button @onclick=Refresh class="button is-white level-item"><I X=refresh></I></button>
+        </div>
+    </div>
+}
+@if (Access.Page?.IsBusy ?? false)
+{
+    <progress class="progress is-small level-item is-info" max="100">15%</progress>    
+}
+@if (Dialog.Current != null)
+{
+// ToDo Keep overlapped dialog instances, but hidden, to avoid state loss
+    <DynamicComponent Type=Dialog.Current.Type Parameters=Dialog.Current.Parameters/>
+}
+@code {
+    [Inject] Services.DialogService Dialog { get; set; }
+    [Inject] AccessService Access { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+    [Parameter] public bool? HideActions { get; set; }
+    Task Refresh() => Access.Page?.Refresh() ?? Task.CompletedTask;
+}

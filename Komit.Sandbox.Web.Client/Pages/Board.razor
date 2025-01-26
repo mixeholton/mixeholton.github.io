@@ -1,0 +1,44 @@
+﻿@page "/board"
+<h3>Board</h3>
+
+<button class="btn btn-primary" @onclick="AddWorkItem">CreateUserCommand</button>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in WorkItems)
+        {
+            <tr>
+                <td>@item.Title</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@code {
+    [Inject] CqrsClient Client { get; set; }
+    IEnumerable<WorkItemHeaderDto> WorkItems { get; set; } = new List<WorkItemHeaderDto>();
+
+    async Task AddWorkItem()
+    {
+        var workItemId = WorkItems.LastOrDefault()?.Id;
+        if (workItemId == null)
+            return;
+        await Client.Command(new AddWorkItemCommand(workItemId.Value, "bla")).Result();
+        await Refresh();
+    }
+
+    async Task Refresh()
+    {
+        WorkItems = await Client.Query(new ShowWorkItemsQuery()).Result();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Client = Client.ForModule("Sandbox");
+        await Refresh();
+    }
+}

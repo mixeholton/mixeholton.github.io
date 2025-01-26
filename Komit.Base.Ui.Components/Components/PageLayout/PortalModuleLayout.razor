@@ -1,0 +1,23 @@
+﻿
+@inherits KomitLayoutBase
+<AccessBar></AccessBar>
+<style>
+    .module-bar {
+        background-color: rgb(33, 150, 243);
+        height: 2.5rem;
+    }
+</style>
+<div class="level module-bar is-size-5 has-text-white has-text-weight-medium mb-0 px-3 py-1">
+    <div class="level-left">
+        <a href="" class=" level-item has-text-white">Module section</a>
+        <a href="" class="level-item has-text-white">Module section</a>
+    </div>
+    <div class="level-right">
+        <div class="level-item">Settings</div>
+    </div>
+</div>
+<main>
+    <article>
+        @Body
+    </article>
+</main>

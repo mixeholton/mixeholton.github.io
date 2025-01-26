@@ -1,0 +1,55 @@
+﻿@using Komit.Base.Values
+@using Komit.Base.Ui.Helpers
+<MudDialog Options="MudDialog?.Options ?? new DialogOptions()">
+    <DialogContent>
+        <div class="@IsReadOnlyRender">
+            @Page
+        </div>
+    </DialogContent>
+    <DialogActions>
+        @if (CancelButtonVisible)
+        {
+            <MudButton @ref="CancelButtonRef" Variant="Variant.Text" OnClick="() => DialogHelper.Cancel(MudDialog)">@CancelButtonText</MudButton>
+        }
+        <MudButton @ref="SubmitButtonRef" Color="@ButtonColor" Variant="Variant.Filled" Disabled="IsReadOnly" OnClick="() => DialogHelper.Submit(MudDialog, OnSubmit)">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog>
+
+
+@code {
+    [CascadingParameter]
+    IMudDialogInstance? MudDialog { get; set; }
+    [Parameter]
+    public bool IsReadOnly { get; set; } = false;
+    [Parameter]
+    public RenderFragment? Page { get; set; }
+    [Parameter]
+    public Func<Task>? OnSubmit { get; set; }
+    [Parameter]
+    public string? ButtonText { get; set; }
+    [Parameter]
+    public Color ButtonColor { get; set; }
+    [Parameter]
+    public Color TextColor { get; set; }
+    [Parameter]
+    public bool CancelButtonVisible { get; set; }
+    [Parameter]
+    public string? CancelButtonText { get; set; }
+
+    [Parameter]
+    public DefaultFocusButton DefaultFocusButton { get; set; }
+            
+
+    private string IsReadOnlyRender => IsReadOnly == true ? "pointer-events-none" : "";
+
+    private MudButton? CancelButtonRef { get; set; }
+    private MudButton? SubmitButtonRef { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await SubmitButtonRef.FocusAsync();
+        }
+    }
+}
