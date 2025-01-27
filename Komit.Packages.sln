@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Komit.Base.Module", "Komit.Base.Module\Komit.Base.Module.csproj", "{BE943457-9777-48CB-9BEA-123600511CB8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9037C771-1C32-4127-B404-229B43B55ED4}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Komit.Infrastructure.CqrsClient", "Komit.Infrastructure.CqrsClient\Komit.Infrastructure.CqrsClient.csproj", "{1E502444-735D-430F-A4C9-0A00834EC659}"
 EndProject
