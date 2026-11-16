@@ -89,15 +89,14 @@ Inspired by newer genre features (verify details yourself; adapt, don't copy):
 | Cards per character | **100** | = 1,500 character cards |
 | Shared cards | ~30 Pantry (colorless), 10 Spoiled (curses), 6 Mess (status) | Not counted in the 1,500 |
 | Utensils (relics) | **100 shared + 15 starter** | |
-| Normal enemies | **55** | |
+| Normal enemies | **75** | 25 per act for Acts 1–3 |
 | Elite enemies | **20** | |
 | Bosses | **10** | 3 per act for Acts 1–3 + 1 final boss |
 | Condiments (potions) | 30 | Supporting content |
 | Mystery Dishes (events) | 40 | Supporting content |
 | Grand Chefs | 4 chefs × 6 boons | Supporting content |
 
-> Interpretation used: "75 enemies, 20 of them elites" = 55 normals + 20 elites; the 10 bosses are additional.
-> Total unique combatants: **85**.
+> 75 normals + 20 elites + 10 bosses = **105 unique combatants**.
 
 ### Card rarity split per character (100 cards)
 
@@ -149,7 +148,7 @@ mechanic-teaching card (e.g. Mother Dough swaps a Cover for *Knead*; Moss swaps 
 
 ---
 
-## 6. Enemies (85 combatants)
+## 6. Enemies (105 combatants)
 
 Each enemy needs: id, name, act, tier (normal/elite/boss), HP range (and Heat Level scaling), move list with intents,
 a move-selection pattern (fixed cycle, weighted random with "no 3 repeats", or conditional), and a one-line flavor text.
@@ -158,10 +157,11 @@ Encounters are defined separately (an encounter = 1–4 enemies). Each act has a
 
 ### Act 1 — The Pantry
 
-**Normals (18):** Moldy Crouton · Jelly Bean Swarm · Angry Onion (makes you cry: Soggy) · Raisin Gang (group of 3) ·
+**Normals (25):** Moldy Crouton · Jelly Bean Swarm · Angry Onion (makes you cry: Soggy) · Raisin Gang (group of 3) ·
 Breadcrumb Mite · Feral Biscuit · Pickle Sentry · Rice Weevil · Stale Pretzel Knight · Gummi Grub · Pepper Imp ·
 Salted Slug · Tin Can Rattler · Expired Yogurt · Wild Garlic Clove · Popcorn Kernel (explodes after 3 turns) ·
-Marshmallow Blob (splits at half HP) · Fruit Fly Cloud
+Marshmallow Blob (splits at half HP) · Fruit Fly Cloud · Sprouted Potato (grows eyes = more attacks) ·
+Rogue Meatball · Soggy Cereal Swarm · Cracker Crab · Sugar Ant Column · Bitter Lemon · Burnt Toast Brute
 
 **Elites (6):** Rotten Cabbage Ogre · Salt & Pepper Twins · The Moldfather · Rolling Pin Golem · Gingerbread Brute ·
 Cereal Box Mimic
@@ -171,9 +171,11 @@ drones, sticky Honey slows your draws) · **Colonel Cornucopia** (horn that spil
 
 ### Act 2 — The Fermentation Cellar
 
-**Normals (18):** Sauerkraut Shambler · Kombucha Scoby · Vinegar Wraith · Blue Cheese Lurker · Miso Monk ·
+**Normals (25):** Sauerkraut Shambler · Kombucha Scoby · Vinegar Wraith · Blue Cheese Lurker · Miso Monk ·
 Yeast Swarm · Sourdough Shade · Brine Shrimp School · Cave Truffle · Hot Sauce Hexer · Pickled Egg Sentinel ·
-Natto String-Spinner · Fig Wasp · Cork Golem · Tempeh Tortoise · Kefir Specter · Fungus Gnat Horde · Anchovy Pack
+Natto String-Spinner · Fig Wasp · Cork Golem · Tempeh Tortoise · Kefir Specter · Fungus Gnat Horde · Anchovy Pack ·
+Pickled Herring · Sake Lees Spirit · Fish Sauce Siren · Rotten Tomato Thrower · Sour Cream Slime · Mead Drone ·
+Limburger Bog
 
 **Elites (7):** Lutefisk Leviathan · The Cask Knight · Durian Behemoth · Surströmming Abomination ·
 Black Garlic Witch · Roquefort Hydra (regrows heads) · Century Egg Oracle (predicts & punishes your next card type)
@@ -183,10 +185,11 @@ turns them Spoiled until cleansed) · **The Vintage Phantom** (ages: gets strong
 
 ### Act 3 — The Banquet Hall
 
-**Normals (19):** Champagne Sentry · Caviar Swarm · Truffle Hound · Foie Gras Duelist · Lobster Gladiator ·
+**Normals (25):** Champagne Sentry · Caviar Swarm · Truffle Hound · Foie Gras Duelist · Lobster Gladiator ·
 Croquembouche Tower · Soufflé Sentinel (deflates if hit 3× in a turn) · Macaron Twins · Oyster Pearl-Spitter ·
 Flambé Wisp · Gold Leaf Gilder · Escargot Templar · Crème Brûlée Guard (hard shell) · Canapé Courtier · Pâté Golem ·
-Crêpe Cartographer · Sorbet Elemental · Wagyu Bull · Saffron Thread Weaver
+Crêpe Cartographer · Sorbet Elemental · Wagyu Bull · Saffron Thread Weaver · Tiramisu Knight ·
+Profiterole Bomber · Bisque Bard · Petit Four Quartet · Consommé Mirage · Beef Wellington Warden
 
 **Elites (7):** The Head Waiter (serves "courses" that change his moves) · Baked Alaska (fire/ice phase swap) ·
 Turducken (three nested phases) · Peking Duck Assassin · Golden Pineapple Paladin · The Michelin Inspector
@@ -201,7 +204,12 @@ Turducken (three nested phases) · Peking Duck Assassin · Golden Pineapple Pala
 grows more hungry each turn, and must be "fed" (Crust or cards) or it devours HP. Preceded by a mandatory elite
 gauntlet using one Act-3 elite with Heat Level modifiers.
 
-Totals: 55 normals ✔ · 20 elites ✔ · 10 bosses ✔
+Totals: 75 normals ✔ · 20 elites ✔ · 10 bosses ✔ = 105
+
+**Encounter variety rule:** a run only has ~5–6 normal fights per act, so a player meets roughly a quarter of an act's
+normals per run. To keep all 25 relevant: build ≥ 20 encounters per act, ensure each normal enemy appears in ≥ 2
+encounters, never repeat an encounter within a run, and give each enemy one memorable gimmick so it reads distinctly
+on first sight.
 
 ---
 
@@ -333,9 +341,9 @@ Work on exactly one milestone per session unless it finishes early. Start each s
 | M0 | Repo skeleton | Solution builds, empty test passes, Unity project opens (human check), `PROGRESS.md` exists |
 | M1 | Combat core | Turn loop, Heat, Crust, statuses, action queue, effect ops, 1 character (Bruno) with 20 cards, 5 Act-1 enemies, all tested |
 | M2 | Data pipeline | JSON loading, validator, generated card text, simulator v1 running Bruno vs Act-1 encounters |
-| M3 | Run loop | Map generation, rewards, Kitchen Station, Night Market, Pantry Raid, save/load, Act 1 complete (18+6+3 enemies) |
+| M3 | Run loop | Map generation, rewards, Kitchen Station, Night Market, Pantry Raid, save/load, Act 1 complete (25+6+3 enemies) |
 | M4 | Unity vertical slice | Playable Act 1 with Bruno in Unity with placeholder art |
-| M5 | Acts 2–4 | All 85 combatants + encounters, simulator coverage |
+| M5 | Acts 2–4 | All 105 combatants + encounters, simulator coverage |
 | M6 | Characters batch A | Bruno (complete to 100), Madame Glaze, Grease Lightning, Nonna Rosa, Saffron — 100 cards each, balanced in sim |
 | M7 | Characters batch B | Mother Dough, Min-ji, Bea, Moss, Rico |
 | M8 | Characters batch C | Kaito, Volt, Valentina, Dr. Sphere, Chomp |
